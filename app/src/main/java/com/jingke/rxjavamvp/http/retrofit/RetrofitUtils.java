@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * RetrofitUtils工具类
@@ -69,6 +70,21 @@ public class RetrofitUtils {
                 .client(okHttpClient())
                 .baseUrl(BASE_API)
                 .addConverterFactory(DefaultConvertFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        return retrofit;
+    }
+
+    /**
+     * 数据无需gson解析 返回string
+     * @param url 自定义服务器地址
+     * @return
+     */
+    public Retrofit retrofitString(String url) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(okHttpClient())
+                .baseUrl(url)
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         return retrofit;
