@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 /**
  * 手机号归属地Presenter
@@ -65,17 +64,9 @@ public class PhoneAddressPresenter extends BasePresenter<IPhoneAddressView,Phone
             }
         };
 
-        HttpRxObservable.getObservable(ApiUtils.getPhoneApi().phoneQuery(request), getActivity()).subscribe(new Consumer() {
-            @Override
-            public void accept(Object o) throws Exception {
 
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-
-            }
-        });
+        HttpRxObservable.getObservable(ApiUtils.getPhoneApi().phoneQuery(request), getActivity())
+                .subscribe(httpRxObserver);
 
         //取消请求
 //        if(!httpRxObserver.isDisposed()){
